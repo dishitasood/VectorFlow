@@ -1,8 +1,12 @@
-from services.transcript_cleaner import remove_operator_and_disclaimer
+from services.transcript_cleaner import (
+    remove_operator_and_disclaimer,
+    extract_prepared_remarks
+)
 
 with open("earnings-call.txt") as f:
-    raw_text = f.read()
+    raw = f.read()
 
-# Print operator and disclaimer removed
-cleaned = remove_operator_and_disclaimer(raw_text)
-print(cleaned[:100])
+cleaned = remove_operator_and_disclaimer(raw)
+prepared = extract_prepared_remarks(cleaned)
+
+print(prepared[-1000:])
