@@ -17,6 +17,7 @@ def extract_prepared_remarks(text: str) -> str:
     Extracts prepared remarks before the Q&A section.
     """
 
+    #Extract the QNA section
     qa_markers = [
         "question-and-answer",
         "q&a",
