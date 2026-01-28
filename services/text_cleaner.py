@@ -77,11 +77,20 @@ def final_clean(text, pipeline):
         text = step(text)
     return text
 
-with open("raw_earnings_call.txt", "r", encoding="utf-8") as f:
+with open("earnings-call.txt", "r", encoding="utf-8") as f:
     raw_text = f.read()
 
 cleaned_text = final_clean(raw_text, cleaning_piepline)
 
-with open("cleaned_earnings_call.txt", "w", encoding="utf-8") as f:
-    f.write(cleaned_text)
+# with open("cleaned_earnings_call.txt", "w", encoding="utf-8") as f:
+#     f.write(cleaned_text)
 
+def text_length(raw_text, pipeline):
+    text = raw_text
+    for step in pipeline:
+        before_len = len(text)
+        text = step(text)
+        after_len = len(text)
+        print(f"{step.__name__}: {before_len} → {after_len}")
+
+print(text_length(raw_text, cleaning_piepline))
