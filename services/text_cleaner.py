@@ -1,7 +1,5 @@
 import re
 
-raw_text = open("earnings-call.txt", "r").read()
-
 def remove_operator_and_disclaimer(text: str) -> str:
     """Removes operator intro and legal disclaimer section"""
 
@@ -60,4 +58,30 @@ def final_cleanup(text):
     text = normalize_whitespace(text)
     text = re.sub(r'\n\s*\n', '\n\n', text)
     return text
+
+cleaning_piepline = [
+    normalize_whitespace,
+    remove_page_numbers,
+    remove_urls_email,
+    remove_copyright,
+    remove_forward_looking,
+    remove_operator_and_disclaimer,
+    extract_prepared_remarks,
+    final_cleanup,
+]
+
+def final_clean(text, pipeline):
+    text = raw_text
+
+    for step in pipeline:
+        text = step(text)
+    return text
+
+with open("raw_earnings_call.txt", "r", encoding="utf-8") as f:
+    raw_text = f.read()
+
+cleaned_text = final_clean(raw_text, cleaning_piepline)
+
+with open("cleaned_earnings_call.txt", "w", encoding="utf-8") as f:
+    f.write(cleaned_text)
 
